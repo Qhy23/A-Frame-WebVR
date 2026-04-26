@@ -36,21 +36,21 @@
   <!-- 地球轨道, 地球做圆周运动 -->
   <a-entity id="earth-orbit">
     <!-- 地轴倾角 -->
-    <a-entity id="earth-tilt" rotation="23.5 0 0">
+    <a-entity id="earth-tilt" rotation="23.5 0 0" position="3 0 0">
       <!-- 地球, 自转 -->
-      <a-sphere id="earth" position="3 0 0" radius="0.5"
+      <a-sphere id="earth" position="0 0 0" radius="0.5"
                 material="src: #earthTex"
                 class="clickable">
-
-        <!-- 月球轨道, 月球做圆周运动 -->
-        <a-entity id="moon-orbit" rotation="5.145 0 0">
-          <!-- 月球 -->
-          <a-sphere id="moon" position="1 0 0" radius="0.2"
-                    material="src: #moonTex"
-                    class="clickable">
-          </a-sphere>
-        </a-entity>
       </a-sphere>
+
+      <!-- 月球轨道, 月球做圆周运动 -->
+      <a-entity id="moon-orbit" rotation="5.145 0 0">
+        <!-- 月球 -->
+        <a-sphere id="moon" position="1 0 0" radius="0.2"
+                  material="src: #moonTex"
+                  class="clickable">
+        </a-sphere>
+      </a-entity>
     </a-entity>
   </a-entity>
 
