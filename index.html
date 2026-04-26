@@ -34,29 +34,23 @@
   </a-sphere>
 
   <!-- 地球轨道, 地球做圆周运动 -->
-  <a-entity id="earth-orbit" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
+  <a-entity id="earth-orbit">
     <!-- 地轴倾角 -->
     <a-entity id="earth-tilt" rotation="23.5 0 0">
       <!-- 地球, 自转 -->
       <a-sphere id="earth" position="3 0 0" radius="0.5"
                 material="src: #earthTex"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
                 class="clickable">
 
         <!-- 月球轨道, 月球做圆周运动 -->
-        <a-entity id="moon-orbit"
-                  rotation="0 0 0"
-                  animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
-          <!-- 轨道倾角 -->
-          <a-entity rotation="5.145 0 0">
-            <!-- 月球 -->
-            <a-sphere id="moon" position="1 0 0" radius="0.2"
-                      material="src: #moonTex"
-                      class="clickable">
-            </a-sphere>
-          </a-entity>
-        </a-sphere>
-      </a-entity>
+        <a-entity id="moon-orbit" rotation="5.145 0 0">
+          <!-- 月球 -->
+          <a-sphere id="moon" position="1 0 0" radius="0.2"
+                    material="src: #moonTex"
+                    class="clickable">
+          </a-sphere>
+        </a-entity>
+      </a-sphere>
     </a-entity>
   </a-entity>
 
@@ -90,6 +84,64 @@ window.onload = function () {
     el.setAttribute('gaze-color', '');
   });
 };
+
+// 旋转
+AFRAME.registerComponent('orbit-sim', {
+  init: function () {
+    // 地球公转角
+    this.earthAngle = 0;
+    // 地球自转角
+    this.earthSelf = 0;
+    // 月球公转角
+    this.moonAngle = 0;
+    // 月球自转角
+    this.moonSelf = 0;
+
+    // 获取节点
+    this.earthOrbit = document.querySelector('#earth-orbit');
+    this.earth = document.querySelector('#earth');
+    this.moonOrbit = document.querySelector('#moon-orbit');
+  },
+
+  tick: function (time, dt) {
+    let delta = dt / 1000;
+
+    // 地球公转
+    this.earthAngle += 10 * delta;
+    this.earthOrbit.setAttribute('rotation', {
+      x: 0,
+      y: this.earthAngle,
+      z: 0
+    });
+
+    // 地球自转
+    this.earthSelf += 40 * delta;
+    this.earth.setAttribute('rotation', {
+      x: 0,
+      y: this.earthSelf,
+      z: 0
+    });
+
+    // 月球公转
+    this.moonAngle += 60 * delta;
+    this.moonOrbit.setAttribute('rotation', {
+      x: 5.145,
+      y: this.moonAngle,
+      z: 0
+    });
+
+    // 月球自转
+    this.moonSelf += 60 * delta;
+    document.querySelector('#moon').setAttribute('rotation', {
+      x: 0,
+      y: this.moonSelf,
+      z: 0
+    });
+  }
+});
+
+// 启动旋转
+document.querySelector('a-scene').setAttribute('orbit-sim', '');
 </script>
 
 </body>
