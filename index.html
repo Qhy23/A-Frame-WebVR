@@ -34,22 +34,29 @@
   </a-sphere>
 
   <!-- 地球轨道, 地球做圆周运动 -->
-  <a-entity id="earth-orbit" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
-    <!-- 地球, 自转 -->
-    <a-sphere id="earth" position="3 0 0" radius="0.5"
-              material="src: #earthTex"
-              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"
-              class="clickable">
-    </a-sphere>
-
-    <!-- 月球轨道, 月球做圆周运动 -->
-    <a-entity id="moon-orbit" position="3 0 0"
-              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
-      <!-- 月球, 自转 -->
-      <a-sphere id="moon" position="1 0 0" radius="0.2"
-                material="src: #moonTex"
+  <a-entity id="earth-orbit" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000">
+    <!-- 地轴倾角 -->
+    <a-entity id="earth-tilt" rotation="23.5 0 0">
+      <!-- 地球, 自转 -->
+      <a-sphere id="earth" position="3 0 0" radius="0.5"
+                material="src: #earthTex"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
                 class="clickable">
-      </a-sphere>
+
+        <!-- 月球轨道, 月球做圆周运动 -->
+        <a-entity id="moon-orbit"
+                  rotation="0 0 0"
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+          <!-- 轨道倾角 -->
+          <a-entity rotation="5.145 0 0">
+            <!-- 月球 -->
+            <a-sphere id="moon" position="1 0 0" radius="0.2"
+                      material="src: #moonTex"
+                      class="clickable">
+            </a-sphere>
+          </a-entity>
+        </a-sphere>
+      </a-entity>
     </a-entity>
   </a-entity>
 
