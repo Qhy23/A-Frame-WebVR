@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>太阳-地球-月亮 模型 WebVR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head>
+<body>
+<a-scene background="color: black"> <!-- 黑色背景 -->
+  <!-- 光照设置 -->
+  <a-entity light="type: ambient; intensity: 0.3"></a-entity>
+  <a-entity light="type: point; intensity: 2; distance: 100" position="0 0 0"></a-entity>
+
+  <!-- 相机 -->
+  <a-entity camera look-controls position="0 1.6 5">
+    <!-- 屏幕中心为凝视视线 -->
+    <a-cursor fuse="true" fuse-timeout="1000"
+              material="color: white; shader: flat"></a-cursor>
+  </a-entity>
+
+  <!-- 太阳 -->
+  <a-sphere id="sun" position="0 0 0" radius="1.2"
+            color="yellow"
+            class="clickable">
+  </a-sphere>
+
+  <!-- 地球轨道, 地球做圆周运动 -->
+  <a-entity id="earth-orbit" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
+    <!-- 地球, 自转 -->
+    <a-sphere id="earth" position="3 0 0" radius="0.5"
+              color="blue"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"
+              class="clickable">
+    </a-sphere>
+
+    <!-- 月球轨道, 月球做圆周运动 -->
+    <a-entity id="moon-orbit" position="3 0 0"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+      <!-- 月球, 自转 -->
+      <a-sphere id="moon" position="1 0 0" radius="0.2"
+                color="gray"
+                class="clickable">
+      </a-sphere>
+    </a-entity>
+  </a-entity>
+
+</a-scene>
+
+<script>
+// 凝视交互：改变颜色
+AFRAME.registerComponent('gaze-color', {
+  init: function () {
+    let el = this.el;
+    let originalColor = el.getAttribute('color');
+
+    el.addEventListener('mouseenter', function () {
+      el.setAttribute('color', 'red');
+    });
+
+    el.addEventListener('mouseleave', function () {
+      el.setAttribute('color', originalColor);
+    });
+  }
+});
+
+// 给所有可交互物体添加组件
+window.onload = function () {
+  document.querySelectorAll('.clickable').forEach(function (el) {
+    el.setAttribute('gaze-color', '');
+  });
+};
+</script>
+
+</body>
+</html>
